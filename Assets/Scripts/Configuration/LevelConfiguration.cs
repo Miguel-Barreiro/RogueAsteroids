@@ -6,5 +6,7 @@ namespace Configuration
 	public class LevelConfiguration : ScriptableObject
 	{
 		public GameObject BackgroundPrefab;
+		public GameObject NormalAsteroidPrefab;
+		
 	}
 }

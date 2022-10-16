@@ -24,8 +24,11 @@ namespace Systems.Game
 				SpriteRenderer background = _gameBackground.GetComponent<SpriteRenderer>();
 				Transform shipTransform = _ship.View.GameObject.Value.transform;
 
-				float newX = shipTransform.position.x % background.sprite.bounds.size.x;
-				float newY = shipTransform.position.y % background.sprite.bounds.size.y;
+				Vector3 position = shipTransform.position;
+				Bounds spriteBounds = background.sprite.bounds;
+				
+				float newX = position.x % spriteBounds.size.x;
+				float newY = position.y % spriteBounds.size.y;
 				Vector3 newPosition = new Vector3( -newX , -newY,  20 );
 				background.transform.localPosition = newPosition;
 			}

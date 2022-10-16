@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Generic Space Level
   m_EditorClassIdentifier: 
   BackgroundPrefab: {fileID: 585860466754024811, guid: e884e84c2332a4c41a0e39dc9ed6d22e, type: 3}
+  NormalAsteroidPrefab: {fileID: 8825331047205995922, guid: 1d31dd4d8e943324ca4d00224e25d536, type: 3}
