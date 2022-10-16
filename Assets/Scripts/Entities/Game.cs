@@ -1,9 +1,11 @@
 
+using Components;
+
 namespace Entities
 {
 	public class Game : IEntity
 	{
-		public int Score = 0;
+		public readonly BindableProperty<int> Score = 0;
 
 		public void Destroy() {  }
 	}

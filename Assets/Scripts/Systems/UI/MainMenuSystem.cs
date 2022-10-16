@@ -1,5 +1,7 @@
+using Configuration;
 using Events;
 using Events.UI;
+using Systems.Core;
 using UnityEngine;
 using View;
 
@@ -11,8 +13,8 @@ namespace Systems.UI
 		private Canvas _uiCanvas;
 		private UIConfig _uiConfig;
 		private GameObject _mainMenuGameObject;
-		private DependencyManager _manager;
 		private PlayButtonEvent _playButtonEvent;
+		private PrefabFactory _prefabFactory;
 
 		public void SetupDependencies(DependencyManager manager)
 		{
@@ -20,9 +22,7 @@ namespace Systems.UI
 			_uiCanvas = manager.Get<Canvas>();
 			_uiConfig = manager.Get<UIConfig>();
 			_playButtonEvent = manager.Get<PlayButtonEvent>();
-
-
-			_manager = manager;
+			_prefabFactory = manager.Get<PrefabFactory>();
 		}
 
 		public void Setup()
@@ -45,7 +45,7 @@ namespace Systems.UI
 		private void OnGameLoad()
 		{
 			if (_mainMenuGameObject == null)
-				_mainMenuGameObject = _manager.Instanciate(_uiConfig.MainMenuPrefab, _uiCanvas.transform); 
+				_mainMenuGameObject = _prefabFactory.CreateNew(_uiConfig.MainMenuPrefab, _uiCanvas.transform); 
 			
 			_mainMenuGameObject.SetActive(true);
 		}

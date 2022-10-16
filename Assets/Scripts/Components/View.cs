@@ -4,6 +4,6 @@ namespace Components
 {
 	public class View
 	{
-		public GameObject GameObject;
+		public readonly BindableProperty<GameObject> GameObject = new BindableProperty<GameObject>(null);
 	}
 }

@@ -5,6 +5,8 @@ namespace Entities
 {
 	public class Ship : IEntity
 	{
+		public readonly BindableProperty<int> Lifes = 0;
+		
 		public readonly PhysicalBody PhysicalBody;
 		public readonly Components.View View;
 

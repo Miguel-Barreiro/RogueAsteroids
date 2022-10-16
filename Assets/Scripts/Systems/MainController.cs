@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Events;
+using Systems.Core;
 using Systems.Game;
 using Systems.UI;
 using UnityEngine;
@@ -22,8 +23,12 @@ namespace Systems
 		{
 			Add(manager.Get<InputSystem.InputSystem>());
 			Add(manager.Get<PhysicalBodiesSystem>());
-			Add(manager.Get<MainMenuSystem>());
+			Add(manager.Get<PlayerSpawnSystem>());
 			
+			// UI
+			Add(manager.Get<GameUISystem>());
+			Add(manager.Get<MainMenuSystem>());
+
 			Add(manager.Get<GameStateSystem>());
 			
 			_gameStateEvent = manager.Get<GameStateEvent>();
