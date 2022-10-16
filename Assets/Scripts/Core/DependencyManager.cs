@@ -4,13 +4,15 @@ using Configuration;
 using Entities;
 using Events;
 using Events.UI;
+using Systems;
 using Systems.Game;
+using Systems.Input;
 using Systems.UI;
 using UnityEngine;
 using View;
 using Object = System.Object;
 
-namespace Systems.Core 
+namespace Core 
 {
 
 	// we would use something like zenject to manage our dependencies
@@ -28,6 +30,13 @@ namespace Systems.Core
 
 		[SerializeField]
 		private Canvas UICanvas;
+
+		[SerializeField]
+		private Camera MainCamera;
+		
+		// we only have one level but with a level system we could have different configurations for each one
+		[SerializeField]
+		private LevelConfiguration LevelConfiguration;
 
 		private readonly Dictionary<Type, Object> _objectsByType = new Dictionary<Type, Object>();
 		private static DependencyManager _instance;
@@ -48,21 +57,27 @@ namespace Systems.Core
 			_objectsByType.Add(typeof(UIConfig), UIConfig);
 			_objectsByType.Add(typeof(ShipConfig), ShipConfig);
 			
-			_objectsByType.Add(typeof(Canvas), UICanvas);
+			_objectsByType.Add(typeof(LevelConfiguration), LevelConfiguration);
 			
+			_objectsByType.Add(typeof(Canvas), UICanvas);
+			_objectsByType.Add(typeof(Camera), MainCamera);
+
 		}
 
 		private void AddSystems()
 		{
-			_objectsByType.Add(typeof(InputSystem.InputSystem), new InputSystem.InputSystem());
+			_objectsByType.Add(typeof(InputSystem), new InputSystem());
 			_objectsByType.Add(typeof(ShipMovementSystem), new ShipMovementSystem());
 			_objectsByType.Add(typeof(PhysicalBodiesSystem), new PhysicalBodiesSystem());
 			_objectsByType.Add(typeof(GameStateSystem), new GameStateSystem());
 			_objectsByType.Add(typeof(PlayerSpawnSystem), new PlayerSpawnSystem());
 			
+			_objectsByType.Add(typeof(GameBackgroundSystem), new GameBackgroundSystem());
+
 			// UI
 			_objectsByType.Add(typeof(MainMenuSystem), new MainMenuSystem());
 			_objectsByType.Add(typeof(GameUISystem), new GameUISystem());
+			_objectsByType.Add(typeof(CameraUpdateSystem), new CameraUpdateSystem());
 			
 		}
 

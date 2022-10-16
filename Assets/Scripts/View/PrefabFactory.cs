@@ -1,5 +1,5 @@
+using Core;
 using Systems;
-using Systems.Core;
 using UnityEngine;
 
 namespace View

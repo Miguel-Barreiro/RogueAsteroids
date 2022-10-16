@@ -1,7 +1,7 @@
 using Configuration;
+using Core;
 using Entities;
 using Events;
-using Systems.Core;
 using UnityEngine;
 using View;
 
@@ -36,6 +36,7 @@ namespace Systems.Game
 			{
 				_prefabFactory.Destroy(_ship.View.GameObject.Value);
 				_ship.View.GameObject.Value = null;
+				_ship.PhysicalBody.BodyView.Value = null;
 				_shipFactory.DestroyEntity(_ship);
 			}
 		}
@@ -46,6 +47,9 @@ namespace Systems.Game
 			_ship = _shipFactory.CreateNew();
 			_ship.Lifes.Value = _shipConfig.StartingLifes;
 			_ship.View.GameObject.Value = shipGameObject;
+			_ship.PhysicalBody.BodyView.Value = shipGameObject.GetComponent<PhysicsBodyView>();
+			_ship.PhysicalBody.BreakSpeed = _shipConfig.BreakingSpeed * 10f;
+			_ship.PhysicalBody.TurnSpeed = _shipConfig.TurningSpeed * 10f;
 		}
 	}
 }

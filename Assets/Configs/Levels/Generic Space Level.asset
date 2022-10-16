@@ -9,11 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b829a16879b94931a76c637c41c1d5f4, type: 3}
-  m_Name: BigShipConfig
+  m_Script: {fileID: 11500000, guid: 9713e8019742429387bc92211388b30f, type: 3}
+  m_Name: Generic Space Level
   m_EditorClassIdentifier: 
-  BreakingSpeed: 10
-  TurningSpeed: 10
-  StartingLifes: 3
-  ShipPrefab: {fileID: 5250782430157964393, guid: 421ebfff42a58bc45897b5c1ae950f11, type: 3}
-  Velocity: 1
+  BackgroundPrefab: {fileID: 585860466754024811, guid: e884e84c2332a4c41a0e39dc9ed6d22e, type: 3}

@@ -7,7 +7,7 @@
             "actions": [
                 {
                     "name": "Look",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "9c8d422d-f6ba-461a-a5fa-4fda662cd9c8",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -16,11 +16,11 @@
                 },
                 {
                     "name": "Move",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "e4d0e35d-30ef-435e-bb98-e2bff0b3ed71",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold",
                     "initialStateCheck": true
                 }
             ],
@@ -28,7 +28,7 @@
                 {
                     "name": "",
                     "id": "71753531-10d0-4c72-bd95-1839267cc302",
-                    "path": "<Touchscreen>/primaryTouch/delta",
+                    "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -39,8 +39,8 @@
                 {
                     "name": "",
                     "id": "9738819d-46d1-4d17-bcb6-38873bb00409",
-                    "path": "<Touchscreen>/primaryTouch/radius",
-                    "interactions": "",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "Hold(duration=0.16)",
                     "processors": "",
                     "groups": "",
                     "action": "Move",

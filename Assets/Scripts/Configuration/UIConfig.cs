@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Configuration
 {
-	[CreateAssetMenu(menuName = "ScriptableObjects/UIConfig", order = 1)]
+	[CreateAssetMenu(menuName = "Game Configurations/UIConfig", order = 1)]
 	public class UIConfig : ScriptableObject
 	{
 

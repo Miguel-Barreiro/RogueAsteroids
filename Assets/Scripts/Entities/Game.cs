@@ -1,5 +1,6 @@
 
 using Components;
+using Core;
 
 namespace Entities
 {

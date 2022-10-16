@@ -1,0 +1,68 @@
+using Configuration;
+using Core;
+using Entities;
+using Events;
+using UnityEngine;
+using View;
+
+namespace Systems.Game
+{
+	public class GameBackgroundSystem : System, ISetupSystem, IExecuteSystem, DependencyManager.IDependencyRequired
+	{
+		private GameStateEvent _gameStateEvent;
+		private LevelConfiguration _levelConfiguration;
+		private EntityCycleEvent<Ship> _shipCycleEvent;
+		private Ship _ship;
+		private Camera _camera;
+		private PrefabFactory _prefabFactory;
+		private GameObject _gameBackground;
+
+		public void Execute(float elapsedTime)
+		{
+			if (_ship != null)
+			{
+				SpriteRenderer background = _gameBackground.GetComponent<SpriteRenderer>();
+				Transform shipTransform = _ship.View.GameObject.Value.transform;
+
+				float newX = shipTransform.position.x % background.sprite.bounds.size.x;
+				float newY = shipTransform.position.y % background.sprite.bounds.size.y;
+				Vector3 newPosition = new Vector3( -newX , -newY,  20 );
+				background.transform.localPosition = newPosition;
+			}
+		}
+
+		public void Setup()
+		{
+			_shipCycleEvent.OnCreated += OnNewShip;
+			_gameStateEvent.OnGameStart += OnGameStart;
+			_gameStateEvent.OnGameEnd += OnGameEnd;
+		}
+
+		private void OnGameEnd()
+		{
+			if (_gameBackground != null)
+				_prefabFactory.Destroy(_gameBackground);
+		}
+
+		private void OnGameStart()
+		{
+			_gameBackground = _prefabFactory.CreateNew(_levelConfiguration.BackgroundPrefab, _camera.transform);
+			_gameBackground.transform.localPosition = Vector3.zero;
+			
+		}
+
+		private void OnNewShip(Ship newShip)
+		{
+			_ship = newShip;
+		}
+
+		public void SetupDependencies(DependencyManager manager)
+		{
+			_gameStateEvent = manager.Get<GameStateEvent>();
+			_levelConfiguration = manager.Get<LevelConfiguration>();
+			_shipCycleEvent = manager.Get<EntityCycleEvent<Ship>>();
+			_prefabFactory = manager.Get<PrefabFactory>();
+			_camera = manager.Get<Camera>();
+		}
+	}
+}

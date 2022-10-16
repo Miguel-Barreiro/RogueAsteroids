@@ -176,7 +176,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 2
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -186,7 +186,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
-  m_AllowMSAA: 1
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -441,3 +441,5 @@ MonoBehaviour:
   UIConfig: {fileID: 11400000, guid: a7f877d87ffe7cb418a392bf5a5975b5, type: 2}
   ShipConfig: {fileID: 11400000, guid: 152a6f981127bc2488ef2d62de162b91, type: 2}
   UICanvas: {fileID: 1057066568}
+  MainCamera: {fileID: 8877839}
+  LevelConfiguration: {fileID: 11400000, guid: 088d25db2caaddc42be47afca1efe9c6, type: 2}

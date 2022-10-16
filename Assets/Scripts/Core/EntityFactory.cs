@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using Events;
-using Systems.Core;
 
-namespace Entities
+namespace Core
 {
 	public class EntityFactory<T> : DependencyManager.IDependencyRequired where T : new()
 	{
