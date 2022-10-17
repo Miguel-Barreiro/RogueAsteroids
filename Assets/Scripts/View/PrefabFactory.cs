@@ -20,9 +20,11 @@ namespace View
 
 		public void Destroy(GameObject gameObject)
 		{
-			// gameObject.SetActive(false);
-			// GameObject.Destroy(gameObject);
-			
+			if (_prefabsByGameObject.ContainsKey(gameObject))
+			{
+				GameObject.Destroy(gameObject);
+				return;
+			}
 			GameObject prefab = _prefabsByGameObject[gameObject];
 			if (!_gameObjectPool[prefab].Contains(gameObject))
 				_gameObjectPool[prefab].Add(gameObject);

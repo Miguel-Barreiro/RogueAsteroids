@@ -32,11 +32,7 @@ namespace Systems.Game
 		public void Setup()
 		{
 			_shipCycleEvent.OnCreated += newShip => { _ship = newShip; };
-			_shipCycleEvent.OnDestroyed += ship =>
-			{
-				if (_ship == ship)
-					_ship = null;
-			};
+			_shipCycleEvent.OnDestroyed += ship => { if (_ship == ship) _ship = null; };
 			_gameStateEvent.OnGameStart += OnGameStart;
 		}
 

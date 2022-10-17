@@ -2,6 +2,7 @@ using Configuration;
 using Core;
 using Entities;
 using Events;
+using Events.Collision;
 using UnityEngine;
 using View;
 using View.UI;
@@ -23,6 +24,8 @@ namespace Systems.UI
 		private Entities.Game _game;
 		private EntityCycleEvent<Ship> _shipCycleEvent;
 		private Ship _ship;
+		private ShipDamagedEvent _shipDamagedEvent;
+		private GameObject _warningDamagedVFXGameObject;
 
 		public void Setup()
 		{
@@ -30,16 +33,17 @@ namespace Systems.UI
 			_gameStateEvent.OnGameEnd += OnGameEnd;
 			
 			_gameCycleEvent.OnCreated += OnNewGame;
-			_shipCycleEvent.OnCreated += OnNewShip;
+			_shipCycleEvent.OnCreated += ship =>
+			{
+				_ship = ship;
+				ship.Lifes.SubscribeToChanged(OnShipLifeChange);
+			};
+			_shipCycleEvent.OnDestroyed += ship =>
+			{
+				ship.Lifes.UnsubscribeFromChanged(OnShipLifeChange);
+				if (_ship == ship) _ship = null;
+			};
 		}
-
-		private void OnNewShip(Ship newShip)
-		{
-			if (_ship != null)
-				_ship.Lifes.UnsubscribeFromChanged(OnLifesChange);	
-			_ship = newShip;
-		}
-
 
 		private void OnNewGame(Entities.Game newGame)
 		{
@@ -48,20 +52,31 @@ namespace Systems.UI
 			_game = newGame;
 		}
 
-		private void OnLifesChange(int newValue)
+		private void OnShipLifeChange(int newValue)
 		{
-			_gameUI.Lifes.text = newValue.ToString();
+			if(_gameUI != null)
+				_gameUI.Lifes.text = newValue.ToString();
 		}
 
 		private void OnScoreChange(int newValue)
 		{
-			_gameUI.Score.text = newValue.ToString();
+			if(_gameUI != null)
+				_gameUI.Score.text = newValue.ToString();
 		}
 
 		private void OnGameEnd()
 		{
 			_prefabFactory.Destroy(_gameUIGameObject);
 			_game.Score.UnsubscribeFromChanged(OnScoreChange);
+			_shipDamagedEvent.OnDamaged -= OnShipDamaged;
+
+			if (_warningDamagedVFXGameObject != null)
+			{
+				EndAnimationController endAnimationController = _warningDamagedVFXGameObject.GetComponent<EndAnimationController>();
+				endAnimationController.OnAnimationEnd -= OnWarningLoop;
+				_prefabFactory.Destroy(_warningDamagedVFXGameObject);
+			}
+
 		}
 
 		private void OnGameStart()
@@ -73,7 +88,27 @@ namespace Systems.UI
 			_game.Score.SubscribeToChanged(OnScoreChange);
 
 			_gameUI.Lifes.text = _ship.Lifes.Value.ToString();
-			_ship.Lifes.SubscribeToChanged(OnLifesChange);
+			_ship.Lifes.SubscribeToChanged(OnShipLifeChange);
+
+			_shipDamagedEvent.OnDamaged += OnShipDamaged;
+		}
+
+		private void OnShipDamaged(int deltaLife)
+		{
+			if (_warningDamagedVFXGameObject == null)
+			{
+				_warningDamagedVFXGameObject = _prefabFactory.CreateNew(_uiConfig.DamageWarningVFXPrefab, _canvas.transform);
+				EndAnimationController endAnimationController = _warningDamagedVFXGameObject.GetComponent<EndAnimationController>();
+				endAnimationController.OnAnimationEnd += OnWarningLoop;
+			}
+		}
+
+		private void OnWarningLoop(AnimationType animationtype)
+		{
+			EndAnimationController endAnimationController = _warningDamagedVFXGameObject.GetComponent<EndAnimationController>();
+			endAnimationController.OnAnimationEnd -= OnWarningLoop;
+			_prefabFactory.Destroy(_warningDamagedVFXGameObject);
+			_warningDamagedVFXGameObject = null;
 		}
 
 		public void SetupDependencies(DependencyManager manager)
@@ -84,6 +119,7 @@ namespace Systems.UI
 			_gameStateEvent = manager.Get<GameStateEvent>();
 			_gameCycleEvent = manager.Get<EntityCycleEvent<Entities.Game>>();
 			_shipCycleEvent = manager.Get<EntityCycleEvent<Ship>>();
+			_shipDamagedEvent = manager.Get<ShipDamagedEvent>();
 		}
 	}
 }

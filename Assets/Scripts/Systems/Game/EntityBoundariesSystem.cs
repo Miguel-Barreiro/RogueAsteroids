@@ -40,6 +40,7 @@ namespace Systems.Game
 		public void Setup()
 		{
 			_shipCycleEvent.OnCreated += ship => { _ship = ship; };
+			_shipCycleEvent.OnDestroyed += ship => { if (_ship == ship) _ship = null; };
 		}
 
 		public void SetupDependencies(DependencyManager manager)

@@ -33,7 +33,8 @@ namespace Systems.Game
 
 		public void Setup()
 		{
-			_shipCycleEvent.OnCreated += OnNewShip;
+			_shipCycleEvent.OnCreated += newShip => { _ship = newShip; };
+			_shipCycleEvent.OnDestroyed += ship => { if (_ship == ship) _ship = null; };
 			_gameStateEvent.OnGameStart += OnGameStart;
 			_gameStateEvent.OnGameEnd += OnGameEnd;
 		}
@@ -53,22 +54,27 @@ namespace Systems.Game
 		{
 			_asteroidCycleEvent.OnDestroyed += OnAsteroidDestroy;
 
-			for (int i = 0; i < 5; i++) {
-				SpawnNewAsteroid(i-2);
+			for (int i = 0; i < 3; i++) {
+				SpawnNewAsteroid(i+10);
 			}
-			for (int i = 0; i < 10; i++) {
-				SpawnNewAsteroid(i+20f);
+			for (int i = 0; i < 15; i++) {
+				SpawnNewAsteroid(i+30f);
 			}
 
 		}
 
 		private void OnAsteroidDestroy(Asteroid asteroid)
 		{
-			SpawnNewAsteroid();
+			if (asteroid.Size > 9)
+				SpawnNewAsteroid();
+
 		}
 
-		private void SpawnNewAsteroid(float extraDistance = 0)
+		private void SpawnNewAsteroid(float extraDistance = 10)
 		{
+			if (_ship == null)
+				return;
+			
 			Transform shipTransform = _ship.View.GameObject.Value.transform;
 
 			_asteroidFactory.CreateNew(newAsteroid =>
@@ -89,7 +95,7 @@ namespace Systems.Game
 				deltaDirection.z = 0;
 				deltaDirection.Normalize();
 				
-				Vector3 startingPosition = shipTransform.position + deltaDirection * (5 + extraDistance);
+				Vector3 startingPosition = shipTransform.position + deltaDirection * extraDistance;
 
 				Quaternion randomRotation = Quaternion.AngleAxis(Random.Range(0, 360), Vector3.forward);
 
@@ -101,11 +107,7 @@ namespace Systems.Game
 				newAsteroid.PhysicalBody.BodyView.Value.RigidBody.velocity = startingVelocity;
 			});
 		}
-
-
-		private void OnNewShip(Ship newShip){
-			_ship = newShip;
-		}
+		
 
 		public void SetupDependencies(DependencyManager manager)
 		{

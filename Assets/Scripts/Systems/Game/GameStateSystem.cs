@@ -36,6 +36,11 @@ namespace Systems.Game
 				_ship = ship;
 				ship.Lifes.SubscribeToChanged(OnShipLifeChange);
 			};
+			_shipCycleEvent.OnDestroyed += ship =>
+			{
+				ship.Lifes.UnsubscribeFromChanged(OnShipLifeChange);
+				if (_ship == ship) _ship = null;
+			};
 
 			_game = _entityFactory.CreateNew(null);
 			_playButtonEvent.OnPlayButton += OnPlayButton;

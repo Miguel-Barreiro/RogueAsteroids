@@ -32,9 +32,8 @@ namespace Systems.UI
 		public void Setup()
 		{
 			_gameCycleEvent.OnCreated += newGame => { _game = newGame; };
-			_gameCycleEvent.OnDestroyed += game => { _game = null; };
+			_gameCycleEvent.OnDestroyed += game => { if(_game == game) _game = null; };
 			_gameStateEvent.OnGameLoad += OnGameLoad;
-			_playButtonEvent.OnPlayButton += OnPlayButton;
 			_gameStateEvent.OnGameStart += OnGameStart;
 			_gameStateEvent.OnGameEnd += OnGameEnd;
 		}
@@ -51,11 +50,7 @@ namespace Systems.UI
 		{
 			_mainMenuGameObject.SetActive(false);
 		}
-
-		private void OnPlayButton()
-		{
-			
-		}
+		
 
 		private void OnGameLoad()
 		{

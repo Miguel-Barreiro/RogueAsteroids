@@ -21,6 +21,9 @@ namespace Systems.Game.Collisions
 
 		private void OnCollisionWithBullet(Asteroid asteroid, Bullet bullet, Collision2D collision)
 		{
+			if (_game == null)
+				return;
+
 			asteroid.Life.Value = Math.Max(0, asteroid.Life.Value-1);
 			if (asteroid.Life.Value <= 0)
 			{
@@ -78,6 +81,7 @@ namespace Systems.Game.Collisions
 		{
 			_collisionEvent.OnCollisionWithBullet += OnCollisionWithBullet;
 			_gameCycleEvent.OnCreated += game => { _game = game; };
+			_gameCycleEvent.OnDestroyed += game => { _game = null; };
 		}
 		
 		public void SetupDependencies(DependencyManager manager)

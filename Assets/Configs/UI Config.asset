@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainMenuPrefab: {fileID: 3176576792270010555, guid: f460bd331d0d4b84095a823a8ba57166, type: 3}
   GameUIPrefab: {fileID: 1103150427039922480, guid: a0223a75b0235164aa3852db6eeb7f52, type: 3}
+  DamageWarningVFXPrefab: {fileID: 3440283898084044873, guid: 48ea07c0c6b7d7946a5a716ed40ec89b, type: 3}

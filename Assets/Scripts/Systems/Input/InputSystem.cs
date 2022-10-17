@@ -29,8 +29,7 @@ namespace Systems.Input
             _gameStateEvent.OnGameEnd += OnGameEnd;
             
             _shipCycleEvent.OnCreated += ship => { _ship = ship; };
-            _shipCycleEvent.OnDestroyed += ship => { _ship = null; };
-
+            _shipCycleEvent.OnDestroyed += ship => { if (_ship == ship) _ship = null; };
         }
         
         private void OnGameEnd()

@@ -8,5 +8,6 @@ namespace Configuration
 
 		public GameObject MainMenuPrefab;
 		public GameObject GameUIPrefab;
+		public GameObject DamageWarningVFXPrefab;
 	}
 }

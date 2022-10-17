@@ -118,6 +118,8 @@ namespace Core
 			_objectsByType.Add(typeof(CollisionEvent<Ship>), new CollisionEvent<Ship>());
 			_objectsByType.Add(typeof(CollisionEvent<Asteroid>), new CollisionEvent<Asteroid>());
 
+			_objectsByType.Add(typeof(ShipDamagedEvent), new ShipDamagedEvent());
+			
 		}
 
 		private void SetupDependencies()
