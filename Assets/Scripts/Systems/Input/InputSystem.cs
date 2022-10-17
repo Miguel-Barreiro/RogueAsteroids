@@ -50,12 +50,11 @@ namespace Systems.Input
                 // we need to shift the direction to the -1 to 1 range 
                 direction = direction - Vector2.one / 2;
                 direction = direction * 2;
-                float directionMagnitude = direction.magnitude;
                 direction.Normalize();
                 _ship.PhysicalBody.Direction = direction;
 
                 if (_controls.Player.Move.IsPressed() )
-                    _ship.PhysicalBody.Velocity = _ship.PhysicalBody.Direction * _shipConfig.Velocity;
+                    _ship.PhysicalBody.Velocity = _ship.View.GameObject.Value.transform.right * _shipConfig.Velocity;
                 else
                     _ship.PhysicalBody.Velocity = Vector2.zero;
             }

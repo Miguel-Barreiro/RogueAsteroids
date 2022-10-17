@@ -6,6 +6,7 @@ namespace Entities
 {
 	public sealed class Asteroid : IEntity
 	{
+		public readonly BindableProperty<int> Life = 100;
 		
 		public readonly PhysicalBody PhysicalBody;
 		public readonly Components.View View;
@@ -15,6 +16,7 @@ namespace Entities
 			View = ComponentFactory<Components.View>.Add();
 			PhysicalBody = ComponentFactory<PhysicalBody>.Add();
 		}
+
 
 		public void Destroy()
 		{

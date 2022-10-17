@@ -18,7 +18,7 @@ namespace Systems.Game
 		private EntityCycleEvent<Asteroid> _asteroidCycleEvent;
 
 		private float _timeSinceNextAsteroidSpawn = 0;
-			
+
 		public void Execute(float elapsedTime)
 		{
 			_timeSinceNextAsteroidSpawn += elapsedTime;
@@ -44,7 +44,9 @@ namespace Systems.Game
 			for (int i = 0; i < 5; i++) {
 				SpawnNewAsteroid(i+10f);
 			}
-
+			for (int i = 0; i < 30; i++) {
+				SpawnNewAsteroid(i*2+10f);
+			}
 		}
 
 		private void OnAsteroidDestroy(Asteroid asteroid)
@@ -59,18 +61,25 @@ namespace Systems.Game
 			Asteroid newAsteroid = _asteroidFactory.CreateNew();
 			GameObject newAsteroidGameObject = _prefabFactory.CreateNew(_levelConfiguration.NormalAsteroidPrefab, null);
 
+			int randomSize = Random.Range(100, 250);
+			float randomScale = randomSize * 0.01f;
+			newAsteroidGameObject.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
+
+			newAsteroid.Life.Value = randomSize; 
 			newAsteroid.View.GameObject.Value = newAsteroidGameObject;
 			newAsteroid.PhysicalBody.BodyView.Value = newAsteroidGameObject.GetComponent<PhysicsBodyView>();
-
-			Quaternion startingRotation = Quaternion.identity;
-
+			
 			Vector3 deltaDirection = Random.rotation * Vector2.up;
+			deltaDirection.z = 0;
+			deltaDirection.Normalize();
 			
 			Vector3 startingPosition = shipTransform.position + deltaDirection * (5 + extraDistance);
 
-			newAsteroidGameObject.transform.SetPositionAndRotation(startingPosition, startingRotation);
+			Quaternion randomRotation = Quaternion.AngleAxis(Random.Range(0, 360), Vector3.forward);
 
-			float randomVelocityMagnitude = Random.Range(0, 100) * 0.01f;
+			newAsteroidGameObject.transform.SetPositionAndRotation(startingPosition, randomRotation);
+
+			float randomVelocityMagnitude = Random.Range(0, 100) * 0.05f;
 			Vector2 startingVelocity = (shipTransform.position - startingPosition).normalized * randomVelocityMagnitude;
 
 			newAsteroid.PhysicalBody.BodyView.Value.RigidBody.velocity = startingVelocity;
