@@ -1,40 +1,35 @@
 using Core;
 using Entities;
 using Events.Collision;
+using UnityEngine;
 using View;
 
 namespace Systems.Game.Collisions
 {
 	public class BulletCollisionSystem : System, ISetupSystem,DependencyManager.IDependencyRequired 
 	{
-		private PrefabFactory _prefabFactory;
 		private EntityFactory<Bullet> _bulletFactory;
 		private CollisionEvent<Bullet> _collisionEvent;
 
 		public void Setup()
 		{
 			_collisionEvent.OnCollisionWithAsteroid += OnCollisionWithAsteroid;
-			_collisionEvent.OnCollisionWithShip += (bullet, ship) => { DestroyBullet(bullet); };
-			// _collisionEvent.OnCollisionWithBullet += (bullet, otherBullet) => { DestroyBullet(bullet); };
+			_collisionEvent.OnCollisionWithShip += (bullet, ship, collision) => { DestroyBullet(bullet); };
 		}
 
 
-		private void OnCollisionWithAsteroid(Bullet bullet, Asteroid asteroid)
+		private void OnCollisionWithAsteroid(Bullet bullet, Asteroid asteroid, Collision2D collision)
 		{
 			DestroyBullet(bullet);
 		}
 		
 		private void DestroyBullet(Bullet bullet)
 		{
-			_bulletFactory.DestroyEntity(bullet, () =>
-			{
-				_prefabFactory.Destroy(bullet.View.GameObject.Value);
-			});
+			_bulletFactory.DestroyEntity(bullet);
 		}
 
 		public void SetupDependencies(DependencyManager manager)
 		{
-			_prefabFactory = manager.Get<PrefabFactory>();
 			_bulletFactory = manager.Get<EntityFactory<Bullet>>();
 			_collisionEvent = manager.Get<CollisionEvent<Bullet>>();
 		}

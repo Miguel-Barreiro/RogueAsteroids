@@ -5,8 +5,6 @@ using Entities;
 using Events;
 using Events.UI;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using NotImplementedException = System.NotImplementedException;
 
 namespace Systems.Input
 {
@@ -22,7 +20,7 @@ namespace Systems.Input
         
         private float _timeBetweenShots = 0;
 
-        private const float TIME_BETWEEN_SHOTS = 0.3f;
+        private const float TIME_BETWEEN_SHOTS = 0.2f;
 
         public void Setup()
         {
@@ -65,7 +63,7 @@ namespace Systems.Input
                 else
                     _ship.PhysicalBody.Velocity = Vector2.zero;
 
-                _timeBetweenShots += Math.Min(_timeBetweenShots + elapsedTime, TIME_BETWEEN_SHOTS);
+                _timeBetweenShots = Math.Min(_timeBetweenShots + elapsedTime, TIME_BETWEEN_SHOTS);
                 if (_controls.Player.Shoot.IsPressed() && _timeBetweenShots >= TIME_BETWEEN_SHOTS)
                 {
                     _timeBetweenShots -= TIME_BETWEEN_SHOTS;

@@ -34,6 +34,7 @@ namespace Core
 			
 			Add(manager.Get<AsteroidExplosionSystem>());
 			Add(manager.Get<BulletCollisionSystem>());
+			Add(manager.Get<ShipCollisionSystem>());
 			
 			// UI
 			Add(manager.Get<GameUISystem>());

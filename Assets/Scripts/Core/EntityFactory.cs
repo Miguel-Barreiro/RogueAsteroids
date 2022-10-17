@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using Events;
 using UnityEngine;
+using View;
 
 namespace Core
 {
-	public sealed class EntityFactory<T> : DependencyManager.IDependencyRequired where T : new()
+	public sealed class EntityFactory<T> : DependencyManager.IDependencyRequired where T : IEntity, new()
 	{
 		private readonly List<T> _entitiesSpawned = new List<T>();
 		private readonly List<T> _entityPool = new List<T>();
@@ -16,6 +17,7 @@ namespace Core
 		public void SetupDependencies(DependencyManager manager)
 		{
 			_cycleEvent = manager.Get<EntityCycleEvent<T>>();
+			_prefabFactory = manager.Get<PrefabFactory>();
 		}
 
 
@@ -50,20 +52,22 @@ namespace Core
 			return newEntity;
 		}
 
-		public void DestroyEntity(T entity, Action deleteCallback)
+		public void DestroyEntity(T entity)
 		{
 			if (_entitiesSpawned.Contains(entity))
 			{
 				_entitiesSpawned.Remove(entity);
 				_destroyedEntities.Add(() => {
 					_cycleEvent.TriggerDestroyed(entity);
-					deleteCallback?.Invoke();
+					entity.Destroy(_prefabFactory);
 					_entityPool.Add(entity);
 				});
 			}
 		}
 
-		private static readonly Action[] _tempArray = new Action[100]; 
+		private static readonly Action[] _tempArray = new Action[100];
+		private PrefabFactory _prefabFactory;
+
 		public static void TriggerEntitiesDestroyed()
 		{
 			_destroyedEntities.CopyTo(_tempArray);

@@ -33,17 +33,17 @@ namespace Systems.Game.Collisions
 			{
 				if (_shipsByBody.TryGetValue(targetBodyView, out Ship ship))
 				{
-					_asteroidCollisionEvent.TriggerCollision(originAsteroid, ship);
+					_asteroidCollisionEvent.TriggerCollision(originAsteroid, ship, collision);
 					return;
 				}
 				if (_bulletsByBody.TryGetValue(targetBodyView, out Bullet bullet))
 				{
-					_asteroidCollisionEvent.TriggerCollision(originAsteroid, bullet);
+					_asteroidCollisionEvent.TriggerCollision(originAsteroid, bullet, collision);
 					return;
 				}
 				if (_asteroidsByBody.TryGetValue(targetBodyView, out Asteroid asteroid))
 				{
-					_asteroidCollisionEvent.TriggerCollision(originAsteroid, asteroid);
+					_asteroidCollisionEvent.TriggerCollision(originAsteroid, asteroid, collision);
 					return;
 				}
 			}
@@ -59,17 +59,17 @@ namespace Systems.Game.Collisions
 			{
 				if (_shipsByBody.TryGetValue(targetBodyView, out Ship ship))
 				{
-					_shipCollisionEvent.TriggerCollision(originShip, ship);
+					_shipCollisionEvent.TriggerCollision(originShip, ship, collision);
 					return;
 				}
 				if (_bulletsByBody.TryGetValue(targetBodyView, out Bullet bullet))
 				{
-					_shipCollisionEvent.TriggerCollision(originShip, bullet);
+					_shipCollisionEvent.TriggerCollision(originShip, bullet, collision);
 					return;
 				}
 				if (_asteroidsByBody.TryGetValue(targetBodyView, out Asteroid asteroid))
 				{
-					_shipCollisionEvent.TriggerCollision(originShip, asteroid);
+					_shipCollisionEvent.TriggerCollision(originShip, asteroid, collision);
 					return;
 				}
 			}
@@ -86,17 +86,17 @@ namespace Systems.Game.Collisions
 			{
 				if (_shipsByBody.TryGetValue(targetBodyView, out Ship ship))
 				{
-					_bulletCollisionEvent.TriggerCollision(originBullet, ship);
+					_bulletCollisionEvent.TriggerCollision(originBullet, ship, collision);
 					return;
 				}
 				if (_bulletsByBody.TryGetValue(targetBodyView, out Bullet bullet))
 				{
-					_bulletCollisionEvent.TriggerCollision(originBullet, bullet);
+					_bulletCollisionEvent.TriggerCollision(originBullet, bullet, collision);
 					return;
 				}
 				if (_asteroidsByBody.TryGetValue(targetBodyView, out Asteroid asteroid))
 				{
-					_bulletCollisionEvent.TriggerCollision(originBullet, asteroid);
+					_bulletCollisionEvent.TriggerCollision(originBullet, asteroid, collision);
 					return;
 				}
 			}

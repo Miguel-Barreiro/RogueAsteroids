@@ -1,4 +1,5 @@
 using Core;
+using View;
 
 namespace Entities
 {
@@ -6,6 +7,6 @@ namespace Entities
 	{
 		public readonly BindableProperty<int> Score = 0;
 
-		public void Destroy() {  }
+		public void Destroy(PrefabFactory prefabFactory) {  }
 	}
 }

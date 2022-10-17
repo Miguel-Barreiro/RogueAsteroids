@@ -79,6 +79,7 @@ namespace Core
 			_objectsByType.Add(typeof(CollisionHandlingSystem), new CollisionHandlingSystem());
 			_objectsByType.Add(typeof(AsteroidExplosionSystem), new AsteroidExplosionSystem());
 			_objectsByType.Add(typeof(BulletCollisionSystem), new BulletCollisionSystem());
+			_objectsByType.Add(typeof(ShipCollisionSystem), new ShipCollisionSystem());
 
 			_objectsByType.Add(typeof(GameBackgroundSystem), new GameBackgroundSystem());
 

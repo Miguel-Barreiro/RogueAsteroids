@@ -44,10 +44,7 @@ namespace Systems.Game
 			Asteroid[] asteroids = _asteroidFactory.GetAll();
 			foreach (Asteroid asteroid in asteroids)
 			{
-				_asteroidFactory.DestroyEntity(asteroid, () =>
-				{ 
-					_prefabFactory.Destroy(asteroid.View.GameObject.Value); 
-				});
+				_asteroidFactory.DestroyEntity(asteroid);
 			}
 		}
 
@@ -83,6 +80,7 @@ namespace Systems.Game
 				float randomScale = randomSize * 0.1f;
 				newAsteroidGameObject.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
 
+				newAsteroid.Size = randomSize;
 				newAsteroid.Life.Value = randomSize; 
 				newAsteroid.View.GameObject.Value = newAsteroidGameObject;
 				newAsteroid.PhysicalBody.BodyView.Value = newAsteroidGameObject.GetComponent<PhysicsBodyView>();
