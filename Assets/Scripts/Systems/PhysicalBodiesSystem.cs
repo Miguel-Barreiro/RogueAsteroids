@@ -24,8 +24,13 @@ namespace Systems
 																		physicalBody.TurnSpeed * elapsedTime);
 					rigidBodyTransform.rotation = newRotation;
 					
-					float breakingSpeed = physicalBody.BreakSpeed * elapsedTime;
-					physicsBodyView.RigidBody.velocity = Vector2.Lerp(physicsBodyView.RigidBody.velocity, physicalBody.Velocity, breakingSpeed);
+					if (physicalBody.Velocity.magnitude < physicsBodyView.RigidBody.velocity.magnitude)
+					{
+						float breakingSpeed = physicalBody.BreakSpeed * elapsedTime;
+						physicsBodyView.RigidBody.velocity = Vector2.Lerp(physicsBodyView.RigidBody.velocity, physicalBody.Velocity, breakingSpeed);
+					} else
+						physicsBodyView.RigidBody.velocity = physicalBody.Velocity;
+					
 				}
 			}
 
