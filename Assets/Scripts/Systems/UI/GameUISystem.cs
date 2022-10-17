@@ -11,7 +11,7 @@ namespace Systems.UI
 {
 	
 	// in case we had a bigger game we could divide this system into multiple ones each controlling a part of the game UI
-	public class GameUISystem : System, ISetupSystem, DependencyManager.IDependencyRequired
+	public class GameUISystem : Core.System, ISetupSystem, DependencyManager.IDependencyRequired
 	{
 		private PrefabFactory _prefabFactory;
 		private UIConfig _uiConfig;

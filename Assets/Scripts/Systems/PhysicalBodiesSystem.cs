@@ -5,7 +5,7 @@ using View;
 
 namespace Systems
 {
-	public class PhysicalBodiesSystem : System, IExecuteSystem
+	public class PhysicalBodiesSystem : Core.System, IExecuteSystem
 	{
 
 		public void Execute(float elapsedTime)

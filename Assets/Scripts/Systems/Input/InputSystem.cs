@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Systems.Input
 {
-    public sealed class InputSystem: System, ISetupSystem, IExecuteSystem, DependencyManager.IDependencyRequired
+    public sealed class InputSystem: Core.System, ISetupSystem, IExecuteSystem, DependencyManager.IDependencyRequired
     {
         private readonly PlayerControls _controls = new PlayerControls();
         private GameStateEvent _gameStateEvent;
@@ -28,15 +28,11 @@ namespace Systems.Input
             _gameStateEvent.OnGameStart += OnGameStart;
             _gameStateEvent.OnGameEnd += OnGameEnd;
             
-            _shipCycleEvent.OnCreated += OnNewShip;
+            _shipCycleEvent.OnCreated += ship => { _ship = ship; };
+            _shipCycleEvent.OnDestroyed += ship => { _ship = null; };
 
         }
-
-        private void OnNewShip(Ship newShip)
-        {
-            _ship = newShip;
-        }
-
+        
         private void OnGameEnd()
         {
             _controls.Player.Disable();

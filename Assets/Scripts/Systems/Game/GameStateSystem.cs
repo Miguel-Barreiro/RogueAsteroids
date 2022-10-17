@@ -5,7 +5,7 @@ using Events.UI;
 
 namespace Systems.Game
 {
-	public class GameStateSystem : System, DependencyManager.IDependencyRequired, ISetupSystem
+	public class GameStateSystem : Core.System, DependencyManager.IDependencyRequired, ISetupSystem
 	{
 		private PlayButtonEvent _playButtonEvent;
 		private EntityFactory<Entities.Game> _entityFactory;

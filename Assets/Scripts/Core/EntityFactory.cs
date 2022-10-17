@@ -44,7 +44,7 @@ namespace Core
 			{
 				newEntity = new T();
 			}
-
+			newEntity.RegisterComponents();
 			setupEntity?.Invoke(newEntity);
 			
 			_entitiesSpawned.Add(newEntity);

@@ -8,7 +8,7 @@ using View.UI;
 
 namespace Systems.UI
 {
-	public class MainMenuSystem : System, ISetupSystem,  DependencyManager.IDependencyRequired
+	public class MainMenuSystem : Core.System, ISetupSystem,  DependencyManager.IDependencyRequired
 	{
 		private GameStateEvent _gameStateEvent;
 		private Canvas _uiCanvas;

@@ -70,7 +70,7 @@ namespace Core
 		{
 			_objectsByType.Add(typeof(InputSystem), new InputSystem());
 			_objectsByType.Add(typeof(ShootSystem), new ShootSystem());
-			_objectsByType.Add(typeof(ShipMovementSystem), new ShipMovementSystem());
+
 			_objectsByType.Add(typeof(PhysicalBodiesSystem), new PhysicalBodiesSystem());
 			_objectsByType.Add(typeof(GameStateSystem), new GameStateSystem());
 			_objectsByType.Add(typeof(PlayerSpawnSystem), new PlayerSpawnSystem());

@@ -2,6 +2,7 @@ using Components;
 using Core;
 using Systems;
 using View;
+using View = Components.View;
 
 namespace Entities
 {
@@ -10,15 +11,14 @@ namespace Entities
 		public readonly BindableProperty<int> Life = 100;
 		public int Size = 0;
 		
-		public readonly PhysicalBody PhysicalBody;
-		public readonly Components.View View;
+		public readonly PhysicalBody PhysicalBody = new PhysicalBody();
+		public readonly Components.View View = new Components.View();
 
-		public Asteroid()
+		public void RegisterComponents()
 		{
-			View = ComponentFactory<Components.View>.Add();
-			PhysicalBody = ComponentFactory<PhysicalBody>.Add();
+			ComponentFactory<Components.View>.Add(View);
+			ComponentFactory<PhysicalBody>.Add(PhysicalBody);
 		}
-
 
 		public void Destroy(PrefabFactory prefabFactory)
 		{

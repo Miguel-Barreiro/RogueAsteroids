@@ -9,15 +9,15 @@ namespace Entities
 	{
 		public readonly BindableProperty<int> Lifes = 0;
 		
-		public readonly PhysicalBody PhysicalBody;
-		public readonly Components.View View;
+		public readonly PhysicalBody PhysicalBody = new PhysicalBody();
+		public readonly Components.View View = new Components.View();
 
-		public Ship()
+		public void RegisterComponents()
 		{
-			View = ComponentFactory<Components.View>.Add();
-			PhysicalBody = ComponentFactory<PhysicalBody>.Add();
+			ComponentFactory<Components.View>.Add(View);
+			ComponentFactory<PhysicalBody>.Add(PhysicalBody);
 		}
-		
+
 		public void Destroy(PrefabFactory prefabFactory)
 		{
 			if (View.GameObject.Value != null)

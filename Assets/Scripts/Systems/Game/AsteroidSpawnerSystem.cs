@@ -8,7 +8,7 @@ using View;
 
 namespace Systems.Game
 {
-	public class AsteroidSpawnerSystem: System, IExecuteSystem, ISetupSystem, DependencyManager.IDependencyRequired
+	public class AsteroidSpawnerSystem: Core.System, IExecuteSystem, ISetupSystem, DependencyManager.IDependencyRequired
 	{
 		private PrefabFactory _prefabFactory;
 		private GameStateEvent _gameStateEvent;
@@ -51,7 +51,7 @@ namespace Systems.Game
 		private void OnGameStart()
 		{
 			_asteroidCycleEvent.OnDestroyed += OnAsteroidDestroy;
-			
+
 			for (int i = 0; i < 10; i++) {
 				SpawnNewAsteroid(i-2);
 			}
@@ -98,7 +98,7 @@ namespace Systems.Game
 
 				float randomVelocityMagnitude = Random.Range(0, 100) * 0.01f;
 				Vector2 startingVelocity = (shipTransform.position - startingPosition).normalized * randomVelocityMagnitude;
-
+				
 				newAsteroid.PhysicalBody.BodyView.Value.RigidBody.velocity = startingVelocity;
 			});
 		}

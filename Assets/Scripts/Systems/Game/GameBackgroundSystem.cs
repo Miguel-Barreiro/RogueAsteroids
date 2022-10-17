@@ -7,7 +7,7 @@ using View;
 
 namespace Systems.Game
 {
-	public class GameBackgroundSystem : System, ISetupSystem, IExecuteSystem, DependencyManager.IDependencyRequired
+	public class GameBackgroundSystem : Core.System, ISetupSystem, IExecuteSystem, DependencyManager.IDependencyRequired
 	{
 		private GameStateEvent _gameStateEvent;
 		private LevelConfiguration _levelConfiguration;

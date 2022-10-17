@@ -7,6 +7,7 @@ namespace Entities
 	{
 		public readonly BindableProperty<int> Score = 0;
 
+		public void RegisterComponents() { }
 		public void Destroy(PrefabFactory prefabFactory) {  }
 	}
 }

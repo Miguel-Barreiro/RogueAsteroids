@@ -16,7 +16,7 @@ namespace Core
 		private DependencyManager DependencyManager;
 
 
-		private readonly List<Systems.System> _systems = new List<Systems.System>();
+		private readonly List<System> _systems = new List<System>();
 		private readonly List<IExecuteSystem> _executeSystems = new List<IExecuteSystem>();
 		private GameStateEvent _gameStateEvent;
 
@@ -51,7 +51,7 @@ namespace Core
 		private void Awake()
 		{
 			DependencyManager.Setup();
-			foreach (Systems.System system in _systems)
+			foreach (System system in _systems)
 			{
 				if (system is ISetupSystem setupSystem)
 					setupSystem.Setup();
@@ -75,14 +75,14 @@ namespace Core
 			EntityFactory<Game>.TriggerEntitiesDestroyed();
 		}
 
-		public void DisableSystem(Systems.System system)
+		public void DisableSystem(System system)
 		{
 			if (system is IExecuteSystem executeSystem)
 				_executeSystems.Remove(executeSystem);
 			
 			system.Disable();
 		}
-		public void EnableSystem(Systems.System system)
+		public void EnableSystem(System system)
 		{
 			if (system is IExecuteSystem executeSystem)
 				_executeSystems.Add(executeSystem);
@@ -90,7 +90,7 @@ namespace Core
 			system.Enable();
 		}
 
-		private void Add(Systems.System system)
+		private void Add(System system)
 		{
 			_systems.Add(system);
 			if (system is IExecuteSystem executeSystem)

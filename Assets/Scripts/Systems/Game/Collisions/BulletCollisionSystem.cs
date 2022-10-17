@@ -6,7 +6,7 @@ using View;
 
 namespace Systems.Game.Collisions
 {
-	public class BulletCollisionSystem : System, ISetupSystem,DependencyManager.IDependencyRequired 
+	public class BulletCollisionSystem : Core.System, ISetupSystem,DependencyManager.IDependencyRequired 
 	{
 		private EntityFactory<Bullet> _bulletFactory;
 		private CollisionEvent<Bullet> _collisionEvent;

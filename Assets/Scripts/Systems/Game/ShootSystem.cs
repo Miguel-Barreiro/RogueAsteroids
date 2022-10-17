@@ -7,7 +7,7 @@ using View;
 
 namespace Systems.Game
 {
-	public class ShootSystem : System, ISetupSystem, DependencyManager.IDependencyRequired
+	public class ShootSystem : Core.System, ISetupSystem, DependencyManager.IDependencyRequired
 	{
 		private ShootEvent _shootEvent;
 		private PrefabFactory _prefabFactory;

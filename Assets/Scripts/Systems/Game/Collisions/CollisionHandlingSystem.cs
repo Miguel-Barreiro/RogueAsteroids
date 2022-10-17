@@ -8,7 +8,7 @@ using View;
 
 namespace Systems.Game.Collisions
 {
-	public sealed class CollisionHandlingSystem:System, ISetupSystem, DependencyManager.IDependencyRequired
+	public sealed class CollisionHandlingSystem:Core.System, ISetupSystem, DependencyManager.IDependencyRequired
 	{
 		private EntityCycleEvent<Ship> _shipCycleEvent;
 		private EntityCycleEvent<Asteroid> _asteroidCycleEvent;

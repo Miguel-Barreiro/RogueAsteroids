@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Systems.Game
 {
-	public class CameraUpdateSystem : System, IExecuteSystem, ISetupSystem, DependencyManager.IDependencyRequired
+	public class CameraUpdateSystem : Core.System, IExecuteSystem, ISetupSystem, DependencyManager.IDependencyRequired
 	{
 		private Camera _camera;
 		private EntityCycleEvent<Ship> _shipCycleEvent;

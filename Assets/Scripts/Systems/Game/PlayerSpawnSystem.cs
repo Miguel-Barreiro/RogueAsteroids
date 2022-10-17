@@ -7,7 +7,7 @@ using View;
 
 namespace Systems.Game
 {
-	public class PlayerSpawnSystem : System, ISetupSystem, DependencyManager.IDependencyRequired
+	public class PlayerSpawnSystem : Core.System, ISetupSystem, DependencyManager.IDependencyRequired
 	{
 		private GameStateEvent _gameStateEvent;
 		private EntityFactory<Ship> _shipFactory;

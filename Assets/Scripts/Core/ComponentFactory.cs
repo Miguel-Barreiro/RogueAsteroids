@@ -4,19 +4,17 @@ using System.Collections.Generic;
 namespace Core
 {
 	
-	public static class ComponentFactory<T> where T : new()
+	public static class ComponentFactory<T>
 	{
 		public static event Action<T> OnComponentCreated;
 		public static event Action<T> OnComponentDestroyed;
 
 		public readonly static List<T> All = new List<T>();
 
-		public static T Add()
+		public static void Add(T newComponent)
 		{
-			T newComponent= new T();
-			OnComponentCreated?.Invoke(newComponent);
 			All.Add(newComponent);
-			return newComponent;
+			OnComponentCreated?.Invoke(newComponent);
 		}
 
 		public static void DestroyComponent(T component)

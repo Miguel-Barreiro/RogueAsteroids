@@ -6,15 +6,15 @@ namespace Entities
 {
 	public class Bullet : IEntity
 	{
-		public readonly PhysicalBody PhysicalBody;
-		public readonly Components.View View;
+		public readonly PhysicalBody PhysicalBody = new PhysicalBody();
+		public readonly Components.View View = new Components.View();
 
-		public Bullet()
+		public void RegisterComponents()
 		{
-			View = ComponentFactory<Components.View>.Add();
-			PhysicalBody = ComponentFactory<PhysicalBody>.Add();
+			ComponentFactory<Components.View>.Add(View);
+			ComponentFactory<PhysicalBody>.Add(PhysicalBody);
 		}
-		
+
 		public void Destroy(PrefabFactory prefabFactory)
 		{
 			if (View.GameObject.Value != null)

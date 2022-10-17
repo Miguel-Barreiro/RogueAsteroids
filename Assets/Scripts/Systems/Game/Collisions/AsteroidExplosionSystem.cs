@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 
 namespace Systems.Game.Collisions
 {
-	public class AsteroidExplosionSystem: System, ISetupSystem, DependencyManager.IDependencyRequired
+	public class AsteroidExplosionSystem: Core.System, ISetupSystem, DependencyManager.IDependencyRequired
 	{
 		private CollisionEvent<Asteroid> _collisionEvent;
 		private EntityFactory<Asteroid> _asteroidFactory;
@@ -26,7 +26,7 @@ namespace Systems.Game.Collisions
 			{
 				_game.Score.Value += asteroid.Size;
 				
-				Vector2 physicalBodyVelocity = asteroid.PhysicalBody.Velocity;
+				Vector2 physicalBodyVelocity = asteroid.PhysicalBody.BodyView.Value.RigidBody.velocity;
 				int newAsteroidSize = Mathf.FloorToInt(asteroid.Size / 3f);
 				
 				_asteroidFactory.DestroyEntity(asteroid);
@@ -43,7 +43,7 @@ namespace Systems.Game.Collisions
 			
 			for (int i = -1; i < 2; i++)
 			{
-				float offsetMultiplier = i * 0.5f;
+				float offsetMultiplier = i * 0.25f;
 				_asteroidFactory.CreateNew(newAsteroid =>
 				{
 					GameObject newAsteroidGameObject = _prefabFactory.CreateNew(_levelConfiguration.NormalAsteroidPrefab, null);
@@ -61,16 +61,16 @@ namespace Systems.Game.Collisions
 					deltaDirection.z = 0;
 					deltaDirection.Normalize();
 
-					Vector3 offset = Vector2.one * offsetMultiplier;
-					Vector3 startingPosition = collision.transform.position + offset;
+					Vector2 offset = Random.rotation * Vector2.one * offsetMultiplier;
+					Vector3 startingPosition = collision.transform.position + new Vector3(offset.x, offset.y, 0);
 
 					Quaternion randomRotation = Quaternion.AngleAxis(Random.Range(0, 360), Vector3.forward);
 
 					newAsteroidGameObject.transform.SetPositionAndRotation(startingPosition, randomRotation);
 					
 					Vector2 startingVelocity = bodyVelocity;
-					newAsteroid.PhysicalBody.Velocity = startingVelocity;
-					newAsteroid.PhysicalBody.BodyView.Value.RigidBody.velocity = startingVelocity;
+					float randomVelocityMagnitude = Random.Range(1, 100) * 0.01f;
+					newAsteroid.PhysicalBody.BodyView.Value.RigidBody.velocity = startingVelocity + offset.normalized * randomVelocityMagnitude;
 				});
 			}
 		}

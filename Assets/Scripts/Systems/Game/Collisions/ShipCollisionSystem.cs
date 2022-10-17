@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Systems.Game.Collisions
 {
-	public class ShipCollisionSystem : System, ISetupSystem, DependencyManager.IDependencyRequired
+	public class ShipCollisionSystem : Core.System, ISetupSystem, DependencyManager.IDependencyRequired
 	{
 		private CollisionEvent<Ship> _collisionEvent;
 
