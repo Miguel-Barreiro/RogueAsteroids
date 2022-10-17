@@ -10,6 +10,7 @@ namespace Systems.Game
 {
 	public class AsteroidSpawnerSystem: Core.System, IExecuteSystem, ISetupSystem, DependencyManager.IDependencyRequired
 	{
+		private const int TIME_BETWEEN_ASTEROID_SPAWN = 5;
 		private PrefabFactory _prefabFactory;
 		private GameStateEvent _gameStateEvent;
 		private EntityFactory<Asteroid> _asteroidFactory;
@@ -23,9 +24,9 @@ namespace Systems.Game
 		public void Execute(float elapsedTime)
 		{
 			_timeSinceNextAsteroidSpawn += elapsedTime;
-			if (_timeSinceNextAsteroidSpawn > 10)
+			if (_timeSinceNextAsteroidSpawn > TIME_BETWEEN_ASTEROID_SPAWN)
 			{
-				_timeSinceNextAsteroidSpawn -= 10;
+				_timeSinceNextAsteroidSpawn -= TIME_BETWEEN_ASTEROID_SPAWN;
 				SpawnNewAsteroid();
 			}
 		}
@@ -52,15 +53,13 @@ namespace Systems.Game
 		{
 			_asteroidCycleEvent.OnDestroyed += OnAsteroidDestroy;
 
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < 5; i++) {
 				SpawnNewAsteroid(i-2);
 			}
-			for (int i = 0; i < 5; i++) {
-				SpawnNewAsteroid(i+10f);
+			for (int i = 0; i < 10; i++) {
+				SpawnNewAsteroid(i+20f);
 			}
-			for (int i = 0; i < 30; i++) {
-				SpawnNewAsteroid(i*2+10f);
-			}
+
 		}
 
 		private void OnAsteroidDestroy(Asteroid asteroid)

@@ -32,6 +32,8 @@ namespace Core
 			Add(manager.Get<CollisionHandlingSystem>());
 			Add(manager.Get<ShootSystem>());
 			
+			Add(manager.Get<EntityBoundariesSystem>());
+			
 			Add(manager.Get<AsteroidExplosionSystem>());
 			Add(manager.Get<BulletCollisionSystem>());
 			Add(manager.Get<ShipCollisionSystem>());
