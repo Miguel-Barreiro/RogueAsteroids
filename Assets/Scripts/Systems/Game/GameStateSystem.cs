@@ -54,6 +54,7 @@ namespace Systems.Game
 
 		private void OnPlayButton()
 		{
+			_game.Score.Value = 0;
 			_gameStateEvent.TriggerGameStart();
 		}
 	}

@@ -32,9 +32,8 @@ namespace Systems.Game.Collisions
 				_asteroidFactory.DestroyEntity(asteroid);
 
 				if (newAsteroidSize > 1)
-				{
 					SpawnSmallAsteroids(collision, physicalBodyVelocity, newAsteroidSize);
-				}
+				
 			}
 		}
 
