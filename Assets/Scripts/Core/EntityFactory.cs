@@ -15,11 +15,19 @@ namespace Core
 			_cycleEvent = manager.Get<EntityCycleEvent<T>>();
 		}
 
-		public List<T> GetAll()
-		{
-			return _entitiesSpawned;
-		}
 
+		/// <summary>
+		/// warning: this function creates a new array every call 
+		/// </summary>
+		/// <returns></returns>
+		public T[] GetAll()
+		{
+			T[] result = new T[_entitiesSpawned.Count];
+			_entitiesSpawned.CopyTo(result);
+			return result;
+		}
+		
+		
 		public T CreateNew(Action<T> setupEntity)
 		{
 			T newEntity;

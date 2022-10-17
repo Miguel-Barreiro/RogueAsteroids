@@ -11,7 +11,9 @@ namespace Configuration
 		public float TurningSpeed = 1;
 		
 		public int StartingLifes = 3;
+		
 		public GameObject ShipPrefab;
+		public GameObject BulletPrefab;
 		
 		[Range(0, 10)]
 		public float Velocity = 1;

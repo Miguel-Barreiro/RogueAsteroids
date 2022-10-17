@@ -16,4 +16,5 @@ MonoBehaviour:
   TurningSpeed: 10
   StartingLifes: 3
   ShipPrefab: {fileID: 5250782430157964393, guid: 421ebfff42a58bc45897b5c1ae950f11, type: 3}
+  BulletPrefab: {fileID: 6100932429605358768, guid: a71ccd378d500994f876a0ec83e52029, type: 3}
   Velocity: 1

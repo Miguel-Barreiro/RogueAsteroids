@@ -31,18 +31,18 @@ namespace Systems.Game
 
 		public void Setup()
 		{
-			_shipCycleEvent.OnCreated += OnNewShip;
+			_shipCycleEvent.OnCreated += newShip => { _ship = newShip; };
+			_shipCycleEvent.OnDestroyed += ship =>
+			{
+				if (_ship == ship)
+					_ship = null;
+			};
 			_gameStateEvent.OnGameStart += OnGameStart;
 		}
 
 		private void OnGameStart()
 		{
 			
-		}
-
-		private void OnNewShip(Ship newShip)
-		{
-			_ship = newShip;
 		}
 	}
 }

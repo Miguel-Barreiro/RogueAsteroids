@@ -19,7 +19,7 @@ namespace Systems.Game
 
 		public void Execute(float elapsedTime)
 		{
-			if (_ship != null)
+			if (_ship != null && _gameBackground != null)
 			{
 				SpriteRenderer background = _gameBackground.GetComponent<SpriteRenderer>();
 				Transform shipTransform = _ship.View.GameObject.Value.transform;
@@ -37,14 +37,18 @@ namespace Systems.Game
 		public void Setup()
 		{
 			_shipCycleEvent.OnCreated += OnNewShip;
+			_shipCycleEvent.OnDestroyed += OnShipDestroyed;
 			_gameStateEvent.OnGameStart += OnGameStart;
 			_gameStateEvent.OnGameEnd += OnGameEnd;
 		}
+
 
 		private void OnGameEnd()
 		{
 			if (_gameBackground != null)
 				_prefabFactory.Destroy(_gameBackground);
+			
+			_gameBackground = null;
 		}
 
 		private void OnGameStart()
@@ -54,6 +58,13 @@ namespace Systems.Game
 			
 		}
 
+		private void OnShipDestroyed(Ship ship)
+		{
+			if (_ship == ship)
+			{
+				_ship = null;
+			}
+		}
 		private void OnNewShip(Ship newShip)
 		{
 			_ship = newShip;

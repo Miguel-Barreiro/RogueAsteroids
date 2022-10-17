@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Configuration;
 using Core;
 using Entities;
@@ -32,12 +33,26 @@ namespace Systems.Game
 		public void Setup()
 		{
 			_shipCycleEvent.OnCreated += OnNewShip;
-			_asteroidCycleEvent.OnDestroyed += OnAsteroidDestroy;
 			_gameStateEvent.OnGameStart += OnGameStart;
+			_gameStateEvent.OnGameEnd += OnGameEnd;
+		}
+
+		private void OnGameEnd()
+		{
+			_asteroidCycleEvent.OnDestroyed -= OnAsteroidDestroy;
+			
+			Asteroid[] asteroids = _asteroidFactory.GetAll();
+			foreach (Asteroid asteroid in asteroids)
+			{
+				_asteroidFactory.DestroyEntity(asteroid);
+				_prefabFactory.Destroy(asteroid.View.GameObject.Value);
+			}
 		}
 
 		private void OnGameStart()
 		{
+			_asteroidCycleEvent.OnDestroyed += OnAsteroidDestroy;
+			
 			for (int i = 0; i < 10; i++) {
 				SpawnNewAsteroid(i-2);
 			}
@@ -62,13 +77,14 @@ namespace Systems.Game
 			{
 				GameObject newAsteroidGameObject = _prefabFactory.CreateNew(_levelConfiguration.NormalAsteroidPrefab, null);
 
-				int randomSize = Random.Range(100, 250);
-				float randomScale = randomSize * 0.01f;
+				int randomSize = Random.Range(10, 35);
+				float randomScale = randomSize * 0.1f;
 				newAsteroidGameObject.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
 
 				newAsteroid.Life.Value = randomSize; 
 				newAsteroid.View.GameObject.Value = newAsteroidGameObject;
 				newAsteroid.PhysicalBody.BodyView.Value = newAsteroidGameObject.GetComponent<PhysicsBodyView>();
+				newAsteroid.PhysicalBody.BreakSpeed = 0;
 				
 				Vector3 deltaDirection = Random.rotation * Vector2.up;
 				deltaDirection.z = 0;
@@ -80,7 +96,7 @@ namespace Systems.Game
 
 				newAsteroidGameObject.transform.SetPositionAndRotation(startingPosition, randomRotation);
 
-				float randomVelocityMagnitude = Random.Range(0, 100) * 0.05f;
+				float randomVelocityMagnitude = Random.Range(0, 100) * 0.01f;
 				Vector2 startingVelocity = (shipTransform.position - startingPosition).normalized * randomVelocityMagnitude;
 
 				newAsteroid.PhysicalBody.BodyView.Value.RigidBody.velocity = startingVelocity;

@@ -28,7 +28,6 @@ namespace Systems.Game
 		{
 			Ship ship = _shipsByBody[bodyView];
 			ship.Lifes.Value = Math.Max(0, ship.Lifes.Value-1);
-			
 		}
 		
 		public void Setup()

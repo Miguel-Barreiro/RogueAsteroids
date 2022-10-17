@@ -67,6 +67,7 @@ namespace Core
 		private void AddSystems()
 		{
 			_objectsByType.Add(typeof(InputSystem), new InputSystem());
+			_objectsByType.Add(typeof(ShootSystem), new ShootSystem());
 			_objectsByType.Add(typeof(ShipMovementSystem), new ShipMovementSystem());
 			_objectsByType.Add(typeof(PhysicalBodiesSystem), new PhysicalBodiesSystem());
 			_objectsByType.Add(typeof(GameStateSystem), new GameStateSystem());
@@ -89,7 +90,7 @@ namespace Core
 			_objectsByType.Add(typeof(EntityFactory<Asteroid>), new EntityFactory<Asteroid>());
 			_objectsByType.Add(typeof(EntityFactory<Ship>), new EntityFactory<Ship>());
 			_objectsByType.Add(typeof(EntityFactory<Bullet>), new EntityFactory<Bullet>());
-			_objectsByType.Add(typeof(EntityFactory<Entities.Game>), new EntityFactory<Entities.Game>());
+			_objectsByType.Add(typeof(EntityFactory<Game>), new EntityFactory<Game>());
 
 			_objectsByType.Add(typeof(PrefabFactory), new PrefabFactory());
 		}
@@ -97,13 +98,14 @@ namespace Core
 		private void AddEvents()
 		{
 			_objectsByType.Add(typeof(PlayButtonEvent), new PlayButtonEvent());
-
+			_objectsByType.Add(typeof(ShootEvent), new ShootEvent());
+			
 			_objectsByType.Add(typeof(GameStateEvent), new GameStateEvent());
 
 			_objectsByType.Add(typeof(EntityCycleEvent<Asteroid>), new EntityCycleEvent<Asteroid>());
 			_objectsByType.Add(typeof(EntityCycleEvent<Ship>), new EntityCycleEvent<Ship>());
 			_objectsByType.Add(typeof(EntityCycleEvent<Bullet>), new EntityCycleEvent<Bullet>());
-			_objectsByType.Add(typeof(EntityCycleEvent<Entities.Game>), new EntityCycleEvent<Entities.Game>());
+			_objectsByType.Add(typeof(EntityCycleEvent<Game>), new EntityCycleEvent<Game>());
 		}
 
 		private void SetupDependencies()

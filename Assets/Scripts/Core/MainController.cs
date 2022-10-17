@@ -28,6 +28,7 @@ namespace Core
 			Add(manager.Get<PlayerSpawnSystem>());
 			Add(manager.Get<AsteroidSpawnerSystem>());
 			Add(manager.Get<CollisionHandlingSystem>());
+			Add(manager.Get<ShootSystem>());
 			
 			// UI
 			Add(manager.Get<GameUISystem>());

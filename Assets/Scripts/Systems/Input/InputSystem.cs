@@ -2,6 +2,7 @@ using Configuration;
 using Core;
 using Entities;
 using Events;
+using Events.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using NotImplementedException = System.NotImplementedException;
@@ -16,6 +17,9 @@ namespace Systems.Input
         private EntityCycleEvent<Ship> _shipCycleEvent;
         private Ship _ship;
         private ShipConfig _shipConfig;
+        private ShootEvent _shootEvent;
+        
+        private float _timeBetweenShots = 0;
 
         public void Setup()
         {
@@ -24,7 +28,7 @@ namespace Systems.Input
             _gameStateEvent.OnGameEnd += OnGameEnd;
             
             _shipCycleEvent.OnCreated += OnNewShip;
-            
+
         }
 
         private void OnNewShip(Ship newShip)
@@ -57,6 +61,13 @@ namespace Systems.Input
                     _ship.PhysicalBody.Velocity = _ship.View.GameObject.Value.transform.right * _shipConfig.Velocity;
                 else
                     _ship.PhysicalBody.Velocity = Vector2.zero;
+
+                _timeBetweenShots += elapsedTime; 
+                if (_controls.Player.Shoot.IsPressed() && _timeBetweenShots > 1)
+                {
+                    _timeBetweenShots -= 1;
+                    _shootEvent.TriggerShoot(_ship);
+                }
             }
         }
 
@@ -66,6 +77,7 @@ namespace Systems.Input
             _mainCamera = manager.Get<Camera>();
             _shipCycleEvent = manager.Get<EntityCycleEvent<Ship>>();
             _shipConfig = manager.Get<ShipConfig>();
+            _shootEvent = manager.Get<ShootEvent>();
         }
     }
     
