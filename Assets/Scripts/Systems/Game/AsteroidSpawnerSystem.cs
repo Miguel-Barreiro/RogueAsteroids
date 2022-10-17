@@ -44,8 +44,10 @@ namespace Systems.Game
 			Asteroid[] asteroids = _asteroidFactory.GetAll();
 			foreach (Asteroid asteroid in asteroids)
 			{
-				_asteroidFactory.DestroyEntity(asteroid);
-				_prefabFactory.Destroy(asteroid.View.GameObject.Value);
+				_asteroidFactory.DestroyEntity(asteroid, () =>
+				{ 
+					_prefabFactory.Destroy(asteroid.View.GameObject.Value); 
+				});
 			}
 		}
 

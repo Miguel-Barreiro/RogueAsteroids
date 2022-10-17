@@ -1,13 +1,16 @@
 using System;
 using System.Collections.Generic;
 using Events;
+using UnityEngine;
 
 namespace Core
 {
-	public class EntityFactory<T> : DependencyManager.IDependencyRequired where T : new()
+	public sealed class EntityFactory<T> : DependencyManager.IDependencyRequired where T : new()
 	{
 		private readonly List<T> _entitiesSpawned = new List<T>();
 		private readonly List<T> _entityPool = new List<T>();
+
+		private readonly static List<Action> _destroyedEntities = new List<Action>();
 
 		private EntityCycleEvent<T> _cycleEvent;
 		public void SetupDependencies(DependencyManager manager)
@@ -47,11 +50,31 @@ namespace Core
 			return newEntity;
 		}
 
-		public void DestroyEntity(T entity)
+		public void DestroyEntity(T entity, Action deleteCallback)
 		{
-			_entitiesSpawned.Remove(entity);
-			_entityPool.Add(entity);
-			_cycleEvent.TriggerDestroyed(entity);
+			if (_entitiesSpawned.Contains(entity))
+			{
+				_entitiesSpawned.Remove(entity);
+				_destroyedEntities.Add(() => {
+					_cycleEvent.TriggerDestroyed(entity);
+					deleteCallback?.Invoke();
+					_entityPool.Add(entity);
+				});
+			}
+		}
+
+		private static readonly Action[] _tempArray = new Action[100]; 
+		public static void TriggerEntitiesDestroyed()
+		{
+			_destroyedEntities.CopyTo(_tempArray);
+			for (int i = 0; i < _tempArray.Length; i++)
+				if (_tempArray[i] != null)
+				{
+					_destroyedEntities.Remove(_tempArray[i]);
+					_tempArray[i].Invoke();
+					_tempArray[i] = null;
+				}
+			
 		}
 	}
 }

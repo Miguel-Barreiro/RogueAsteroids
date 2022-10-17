@@ -1,3 +1,4 @@
+using System;
 using Configuration;
 using Core;
 using Entities;
@@ -20,6 +21,8 @@ namespace Systems.Input
         private ShootEvent _shootEvent;
         
         private float _timeBetweenShots = 0;
+
+        private const float TIME_BETWEEN_SHOTS = 0.3f;
 
         public void Setup()
         {
@@ -62,10 +65,10 @@ namespace Systems.Input
                 else
                     _ship.PhysicalBody.Velocity = Vector2.zero;
 
-                _timeBetweenShots += elapsedTime; 
-                if (_controls.Player.Shoot.IsPressed() && _timeBetweenShots > 1)
+                _timeBetweenShots += Math.Min(_timeBetweenShots + elapsedTime, TIME_BETWEEN_SHOTS);
+                if (_controls.Player.Shoot.IsPressed() && _timeBetweenShots >= TIME_BETWEEN_SHOTS)
                 {
-                    _timeBetweenShots -= 1;
+                    _timeBetweenShots -= TIME_BETWEEN_SHOTS;
                     _shootEvent.TriggerShoot(_ship);
                 }
             }

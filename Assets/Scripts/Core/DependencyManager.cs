@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using Configuration;
 using Entities;
 using Events;
+using Events.Collision;
 using Events.UI;
 using Systems;
 using Systems.Game;
+using Systems.Game.Collisions;
 using Systems.Input;
 using Systems.UI;
 using UnityEngine;
@@ -75,7 +77,9 @@ namespace Core
 			_objectsByType.Add(typeof(AsteroidSpawnerSystem), new AsteroidSpawnerSystem());
 
 			_objectsByType.Add(typeof(CollisionHandlingSystem), new CollisionHandlingSystem());
-			
+			_objectsByType.Add(typeof(AsteroidExplosionSystem), new AsteroidExplosionSystem());
+			_objectsByType.Add(typeof(BulletCollisionSystem), new BulletCollisionSystem());
+
 			_objectsByType.Add(typeof(GameBackgroundSystem), new GameBackgroundSystem());
 
 			// UI
@@ -106,6 +110,11 @@ namespace Core
 			_objectsByType.Add(typeof(EntityCycleEvent<Ship>), new EntityCycleEvent<Ship>());
 			_objectsByType.Add(typeof(EntityCycleEvent<Bullet>), new EntityCycleEvent<Bullet>());
 			_objectsByType.Add(typeof(EntityCycleEvent<Game>), new EntityCycleEvent<Game>());
+			
+			_objectsByType.Add(typeof(CollisionEvent<Bullet>), new CollisionEvent<Bullet>());
+			_objectsByType.Add(typeof(CollisionEvent<Ship>), new CollisionEvent<Ship>());
+			_objectsByType.Add(typeof(CollisionEvent<Asteroid>), new CollisionEvent<Asteroid>());
+
 		}
 
 		private void SetupDependencies()

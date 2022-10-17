@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using Entities;
 using Events;
 using Systems;
 using Systems.Game;
+using Systems.Game.Collisions;
 using Systems.Input;
 using Systems.UI;
 using UnityEngine;
@@ -29,6 +31,9 @@ namespace Core
 			Add(manager.Get<AsteroidSpawnerSystem>());
 			Add(manager.Get<CollisionHandlingSystem>());
 			Add(manager.Get<ShootSystem>());
+			
+			Add(manager.Get<AsteroidExplosionSystem>());
+			Add(manager.Get<BulletCollisionSystem>());
 			
 			// UI
 			Add(manager.Get<GameUISystem>());
@@ -58,6 +63,15 @@ namespace Core
 		{
 			foreach (IExecuteSystem executeSystem in _executeSystems)
 				executeSystem.Execute(Time.deltaTime);
+		}
+
+		private void LateUpdate()
+		{
+			// we need to destroy the entities after we are done with the execute and other physics callbacks
+			EntityFactory<Ship>.TriggerEntitiesDestroyed();
+			EntityFactory<Asteroid>.TriggerEntitiesDestroyed();
+			EntityFactory<Bullet>.TriggerEntitiesDestroyed();
+			EntityFactory<Game>.TriggerEntitiesDestroyed();
 		}
 
 		public void DisableSystem(Systems.System system)

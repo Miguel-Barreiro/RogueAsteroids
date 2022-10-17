@@ -34,8 +34,10 @@ namespace Systems.Game
 		{
 			if (_ship != null)
 			{
-				_shipFactory.DestroyEntity(_ship);
-				_prefabFactory.Destroy(_ship.View.GameObject.Value);
+				_shipFactory.DestroyEntity(_ship, () =>
+				{
+					_prefabFactory.Destroy(_ship.View.GameObject.Value);
+				});
 			}
 		}
 
