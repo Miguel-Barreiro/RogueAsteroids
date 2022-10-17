@@ -6,7 +6,7 @@ namespace View
 	[RequireComponent(typeof(Rigidbody2D))]
 	public class PhysicsBodyView : MonoBehaviour
 	{
-		public event Action<Collision> OnCollision;
+		public event Action<Collision2D, PhysicsBodyView> OnCollision;
 		
 		public Rigidbody2D RigidBody;
 
@@ -14,10 +14,11 @@ namespace View
 		{
 			RigidBody = GetComponent<Rigidbody2D>();
 		}
+		
 
-		private void OnCollisionEnter(Collision collision)
+		private void OnCollisionEnter2D(Collision2D collision)
 		{
-			OnCollision?.Invoke(collision);
+			OnCollision?.Invoke(collision, this);
 		}
 
 	}

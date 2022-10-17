@@ -58,31 +58,33 @@ namespace Systems.Game
 		{
 			Transform shipTransform = _ship.View.GameObject.Value.transform;
 
-			Asteroid newAsteroid = _asteroidFactory.CreateNew();
-			GameObject newAsteroidGameObject = _prefabFactory.CreateNew(_levelConfiguration.NormalAsteroidPrefab, null);
+			_asteroidFactory.CreateNew(newAsteroid =>
+			{
+				GameObject newAsteroidGameObject = _prefabFactory.CreateNew(_levelConfiguration.NormalAsteroidPrefab, null);
 
-			int randomSize = Random.Range(100, 250);
-			float randomScale = randomSize * 0.01f;
-			newAsteroidGameObject.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
+				int randomSize = Random.Range(100, 250);
+				float randomScale = randomSize * 0.01f;
+				newAsteroidGameObject.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
 
-			newAsteroid.Life.Value = randomSize; 
-			newAsteroid.View.GameObject.Value = newAsteroidGameObject;
-			newAsteroid.PhysicalBody.BodyView.Value = newAsteroidGameObject.GetComponent<PhysicsBodyView>();
-			
-			Vector3 deltaDirection = Random.rotation * Vector2.up;
-			deltaDirection.z = 0;
-			deltaDirection.Normalize();
-			
-			Vector3 startingPosition = shipTransform.position + deltaDirection * (5 + extraDistance);
+				newAsteroid.Life.Value = randomSize; 
+				newAsteroid.View.GameObject.Value = newAsteroidGameObject;
+				newAsteroid.PhysicalBody.BodyView.Value = newAsteroidGameObject.GetComponent<PhysicsBodyView>();
+				
+				Vector3 deltaDirection = Random.rotation * Vector2.up;
+				deltaDirection.z = 0;
+				deltaDirection.Normalize();
+				
+				Vector3 startingPosition = shipTransform.position + deltaDirection * (5 + extraDistance);
 
-			Quaternion randomRotation = Quaternion.AngleAxis(Random.Range(0, 360), Vector3.forward);
+				Quaternion randomRotation = Quaternion.AngleAxis(Random.Range(0, 360), Vector3.forward);
 
-			newAsteroidGameObject.transform.SetPositionAndRotation(startingPosition, randomRotation);
+				newAsteroidGameObject.transform.SetPositionAndRotation(startingPosition, randomRotation);
 
-			float randomVelocityMagnitude = Random.Range(0, 100) * 0.05f;
-			Vector2 startingVelocity = (shipTransform.position - startingPosition).normalized * randomVelocityMagnitude;
+				float randomVelocityMagnitude = Random.Range(0, 100) * 0.05f;
+				Vector2 startingVelocity = (shipTransform.position - startingPosition).normalized * randomVelocityMagnitude;
 
-			newAsteroid.PhysicalBody.BodyView.Value.RigidBody.velocity = startingVelocity;
+				newAsteroid.PhysicalBody.BodyView.Value.RigidBody.velocity = startingVelocity;
+			});
 		}
 
 

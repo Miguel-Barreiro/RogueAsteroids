@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Events;
 
@@ -19,7 +20,7 @@ namespace Core
 			return _entitiesSpawned;
 		}
 
-		public T CreateNew()
+		public T CreateNew(Action<T> setupEntity)
 		{
 			T newEntity;
 			if (_entityPool.Count > 0)
@@ -31,6 +32,8 @@ namespace Core
 				newEntity = new T();
 			}
 
+			setupEntity?.Invoke(newEntity);
+			
 			_entitiesSpawned.Add(newEntity);
 			_cycleEvent.TriggerCreated(newEntity);
 			return newEntity;

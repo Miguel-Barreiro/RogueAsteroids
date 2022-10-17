@@ -73,6 +73,8 @@ namespace Core
 			_objectsByType.Add(typeof(PlayerSpawnSystem), new PlayerSpawnSystem());
 			_objectsByType.Add(typeof(AsteroidSpawnerSystem), new AsteroidSpawnerSystem());
 
+			_objectsByType.Add(typeof(CollisionHandlingSystem), new CollisionHandlingSystem());
+			
 			_objectsByType.Add(typeof(GameBackgroundSystem), new GameBackgroundSystem());
 
 			// UI

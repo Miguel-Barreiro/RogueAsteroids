@@ -27,7 +27,7 @@ namespace Systems.Game
 		{
 			_mainController.DisableSystem(_asteroidSpawnerSystem);
 			
-			_game = _entityFactory.CreateNew();
+			_game = _entityFactory.CreateNew(null);
 			_playButtonEvent.OnPlayButton += OnPlayButton;
 			
 			_gameStateEvent.OnGameEnd += () => { _mainController.DisableSystem(_asteroidSpawnerSystem); };

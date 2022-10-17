@@ -44,12 +44,14 @@ namespace Systems.Game
 		private void OnGameStart()
 		{
 			GameObject shipGameObject = _prefabFactory.CreateNew(_shipConfig.ShipPrefab, null);
-			_ship = _shipFactory.CreateNew();
-			_ship.Lifes.Value = _shipConfig.StartingLifes;
-			_ship.View.GameObject.Value = shipGameObject;
-			_ship.PhysicalBody.BodyView.Value = shipGameObject.GetComponent<PhysicsBodyView>();
-			_ship.PhysicalBody.BreakSpeed = _shipConfig.BreakingSpeed * 10f;
-			_ship.PhysicalBody.TurnSpeed = _shipConfig.TurningSpeed * 10f;
+			_ship = _shipFactory.CreateNew(newShip =>
+			{
+				newShip.Lifes.Value = _shipConfig.StartingLifes;
+				newShip.View.GameObject.Value = shipGameObject;
+				newShip.PhysicalBody.BodyView.Value = shipGameObject.GetComponent<PhysicsBodyView>();
+				newShip.PhysicalBody.BreakSpeed = _shipConfig.BreakingSpeed * 10f;
+				newShip.PhysicalBody.TurnSpeed = _shipConfig.TurningSpeed * 10f;
+			});
 		}
 	}
 }
