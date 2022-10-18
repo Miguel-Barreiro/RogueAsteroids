@@ -20,7 +20,7 @@ namespace View
 
 		public void Destroy(GameObject gameObject)
 		{
-			if (_prefabsByGameObject.ContainsKey(gameObject))
+			if (!_prefabsByGameObject.ContainsKey(gameObject))
 			{
 				GameObject.Destroy(gameObject);
 				return;
